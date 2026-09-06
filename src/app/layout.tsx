@@ -3,7 +3,7 @@ import { Bodoni_Moda, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { site } from "@/data/site";
-import { SITE_URL } from "@/lib/constants";
+import { SITE_ORIGIN, SITE_URL } from "@/lib/constants";
 import "./globals.css";
 import "./motion.css";
 import "./intro.css";
@@ -31,7 +31,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: SITE_ORIGIN,
   title: {
     default: site.seo.title,
     template: `%s | ${site.brand.name}`,

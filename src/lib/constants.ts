@@ -12,17 +12,43 @@
 
 import { site } from "@/data/site";
 
-/** Public origin, used for metadataBase, canonical, sitemap and robots. */
+/**
+ * Public origin, used for metadataBase, canonical, sitemap and robots.
+ *
+ * A host that defines the variable but leaves it blank yields "", which `??`
+ * passes straight through — `new URL("")` in layout.tsx then throws
+ * ERR_INVALID_URL and fails the build at "collecting page data". Trim first
+ * and fall back on empty, so an unset and an empty variable behave alike.
+ */
+const SITE_URL_FALLBACK = "https://legendmagazine.in";
+
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://legendmagazine.in"
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || SITE_URL_FALLBACK
 ).replace(/\/$/, "");
 
-/** Form A — editorial submissions. */
-export const STORY_FORM_URL = process.env.NEXT_PUBLIC_STORY_FORM_URL ?? "";
+/**
+ * `SITE_URL` as a URL object, for `metadataBase`.
+ *
+ * Parsed here so a misconfigured origin (a bare domain with no scheme, say)
+ * degrades to the canonical fallback instead of throwing during "collecting
+ * page data" — a build-time crash there reports only "Invalid URL" with no
+ * indication of which variable was at fault.
+ */
+export const SITE_ORIGIN: URL = (() => {
+  try {
+    return new URL(SITE_URL);
+  } catch {
+    return new URL(SITE_URL_FALLBACK);
+  }
+})();
+
+/** Form A — editorial submissions. Trimmed: a blank value counts as unset. */
+export const STORY_FORM_URL =
+  process.env.NEXT_PUBLIC_STORY_FORM_URL?.trim() ?? "";
 
 /** Form B — advertising and partnerships. */
 export const PARTNERSHIP_FORM_URL =
-  process.env.NEXT_PUBLIC_PARTNERSHIP_FORM_URL ?? "";
+  process.env.NEXT_PUBLIC_PARTNERSHIP_FORM_URL?.trim() ?? "";
 
 /**
  * True when a form URL is actually configured.
