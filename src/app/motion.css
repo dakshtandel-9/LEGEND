@@ -1,0 +1,168 @@
+/* Progressive, native-scroll motion. Layout and reading order stay in CSS. */
+.reading-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 80;
+  height: 3px;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--color-july), var(--color-may));
+  transform: scaleX(var(--reading-progress, 0));
+  transform-origin: left;
+  opacity: 0;
+}
+.reading-progress[data-active] { opacity: 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-entrance="masthead"] { animation: masthead-arrive 850ms var(--ease-editorial) both; }
+  [data-entrance="headline"] { animation: headline-arrive 750ms 100ms var(--ease-editorial) both; }
+
+  [data-motion-ready] [data-motion] {
+    transition: opacity 650ms var(--ease-editorial), translate 750ms var(--ease-editorial);
+  }
+  [data-motion-ready] [data-motion-state="pending"] { opacity: 0; translate: 0 28px; }
+  [data-motion-ready] [data-motion-state="visible"] { opacity: 1; translate: 0 0; }
+  [data-motion-ready] [data-motion-delay="1"] { transition-delay: 80ms; }
+  [data-motion-ready] [data-motion-delay="2"] { transition-delay: 160ms; }
+  [data-motion-ready] [data-motion]:focus-within { opacity: 1; translate: none; transition-delay: 0ms; }
+
+  .section-kicker[data-motion="rule"] { position: relative; }
+  [data-motion-ready] .section-kicker[data-motion="rule"] { border-top-color: transparent; }
+  .section-kicker[data-motion="rule"]::before {
+    content: "";
+    position: absolute;
+    inset: -1px 0 auto;
+    height: 1px;
+    background: currentColor;
+    transform-origin: left;
+    transition: transform 950ms var(--ease-editorial);
+  }
+  .section-kicker[data-motion-state="pending"]::before { transform: scaleX(0); }
+  .section-kicker[data-motion-state="visible"]::before { transform: scaleX(1); }
+
+  [data-motion-ready] [data-parallax="image"] {
+    translate: 0 var(--parallax-y, 0px);
+    scale: 1.12;
+  }
+  [data-motion-ready] [data-parallax="rotate"] { rotate: var(--parallax-turn, 0deg); }
+  [data-parallax-active] { will-change: translate, scale, rotate; }
+
+  .editorial-link > span[aria-hidden], .circle-link > span[aria-hidden], .image-arrow {
+    transition: transform 250ms var(--ease-editorial);
+  }
+  .editorial-link:hover > span[aria-hidden], .circle-link:hover > span[aria-hidden] { transform: translate(2px, -2px); }
+  .selected-image:hover .image-arrow { transform: translate(2px, -2px); }
+
+  @keyframes masthead-arrive {
+    from { clip-path: inset(0 0 100% 0); translate: 0 14px; }
+    to { clip-path: inset(0); translate: 0 0; }
+  }
+  @keyframes headline-arrive {
+    from { opacity: .25; translate: 0 20px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+}
+
+/* The photograph and its loading placeholder share reserved space, so neither
+   lazy loading nor decoding changes the geometry of the magazine panels. */
+.editorial-image { display: block; overflow: hidden; }
+.diary-image { overflow: hidden; }
+.editorial-image-fill { position: absolute; inset: 0; }
+.editorial-image img { transition: opacity 550ms ease, filter 650ms ease, transform 650ms var(--ease-editorial); }
+.image-loading-sheen { display: none; pointer-events: none; }
+.editorial-image[data-media-enhanced="true"] .image-loading-sheen {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background: var(--color-paper-deep);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 550ms ease, visibility 0s 550ms;
+}
+.editorial-image[data-media-enhanced="true"][data-media-status="loading"] .image-loading-sheen {
+  opacity: 1;
+  visibility: visible;
+  transition: none;
+}
+.image-loading-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 25%, #ffffff55 50%, transparent 75%);
+  transform: translateX(-100%);
+}
+.editorial-image[data-media-status="loading"] .image-loading-sheen::after { animation: image-sheen 1.8s ease-in-out infinite; }
+.editorial-image[data-media-status="error"] .image-loading-sheen { visibility: hidden; transition: none; }
+.editorial-image[data-media-enhanced="true"][data-media-status="loading"]:not([data-priority]) img {
+  opacity: 0;
+  filter: blur(6px);
+}
+/* A priority image is never delayed or obscured by a decorative loading effect. */
+.editorial-image[data-priority] .image-loading-sheen { display: none !important; }
+.editorial-image[data-media-status="error"] img { visibility: hidden; }
+.image-load-error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--color-paper-deep);
+  color: var(--color-ink);
+  padding: 30px;
+  font-size: 13px;
+  text-align: center;
+}
+.image-load-error > span { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+
+.edition-art .editorial-image-cover {
+  position: relative;
+  height: 88%;
+  width: auto;
+  aspect-ratio: 597 / 842;
+  flex: 0 0 auto;
+  z-index: 1;
+  transform: rotate(-7deg);
+  box-shadow: 12px 20px 25px #15151535;
+  transition: transform 450ms var(--ease-editorial), box-shadow 450ms ease;
+}
+.edition-may .edition-art .editorial-image-cover { transform: rotate(7deg); }
+.edition-card .edition-art .editorial-image-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: none;
+  box-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .edition-art:hover .editorial-image-cover {
+    transform: rotate(0) translateY(-8px);
+    box-shadow: 12px 26px 30px #15151540;
+  }
+}
+@keyframes image-sheen { to { transform: translateX(100%); } }
+
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+  [data-motion-ready] [data-motion-state="pending"] { translate: 0 16px; }
+  [data-motion-ready] [data-motion] { transition-duration: 450ms; }
+  [data-motion-ready] [data-parallax="image"] { scale: 1.06; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reading-progress { display: none; }
+  [data-motion], [data-parallax], [data-entrance] {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: none !important;
+    rotate: none !important;
+    animation: none !important;
+    transition: none !important;
+    clip-path: none !important;
+  }
+  .section-kicker[data-motion="rule"]::before { transform: none !important; }
+  .editorial-image img, .editorial-image-cover, .image-loading-sheen, .image-loading-sheen::after { animation: none !important; transition: none !important; filter: none !important; }
+  .edition-art:hover .editorial-image-cover { transform: rotate(-7deg); }
+  .edition-may .edition-art:hover .editorial-image-cover { transform: rotate(7deg); }
+  .cover-photo:hover img, .selected-image:hover img { transform: none; }
+}

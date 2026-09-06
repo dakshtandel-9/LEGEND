@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-label="Placeholder cover for July 2026">
+  <rect width="900" height="1200" fill="#151515"/>
+  <rect x="34" y="34" width="832" height="1132" fill="none" stroke="#B79D73" stroke-width="1.5"/>
+  <text x="450" y="248" fill="#F5F2EA" text-anchor="middle"
+        font-family="Bodoni Moda, Didot, Georgia, serif" font-size="118" letter-spacing="22">LEGEND</text>
+  <rect x="330" y="300" width="240" height="1.5" fill="#B79D73"/>
+  <text x="276" y="352" fill="#B79D73" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" letter-spacing="2.4">Excellence &#183; Culture &#183; Vision</text>
+  <rect x="34" y="640" width="360" height="120" fill="#16BCD6"/>
+  <text x="72" y="722" fill="#151515" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="86">02</text>
+  <text x="196" y="700" fill="#151515" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19" letter-spacing="3.5">ISSUE</text>
+  <text x="196" y="730" fill="#151515" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19" letter-spacing="3.5">JULY 2026</text>
+  <text x="72" y="900" fill="#F5F2EA" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="58">The Magazine of</text>
+  <text x="72" y="964" fill="#F5F2EA" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="58">Extraordinary Stories</text>
+  <rect x="72" y="1046" width="64" height="1.5" fill="#B79D73"/>
+  <text x="72" y="1094" fill="#8A857B" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" letter-spacing="2.4">Cover placeholder</text>
+  <text x="72" y="1120" fill="#8A857B" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" letter-spacing="2.4">Replace with the printed cover artwork</text>
+</svg>

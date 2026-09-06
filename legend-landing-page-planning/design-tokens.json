@@ -1,0 +1,23 @@
+{
+  "brand": {
+    "name": "LEGEND",
+    "tagline": "Excellence \u00b7 Culture \u00b7 Vision",
+    "descriptor": "The Magazine of Extraordinary Stories"
+  },
+  "colors": {
+    "ink": "#151515",
+    "paper": "#F5F2EA",
+    "white": "#FFFFFF",
+    "muted": "#6D6A63",
+    "line": "#D8D2C6",
+    "gold": "#B79D73",
+    "goldSoft": "#DCCFB4",
+    "may": "#D5E35B",
+    "july": "#16BCD6",
+    "editorialBlue": "#42579B"
+  },
+  "fonts": {
+    "display": "Bodoni Moda",
+    "body": "Inter"
+  }
+}
