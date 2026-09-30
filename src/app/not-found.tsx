@@ -13,7 +13,7 @@ export const metadata: Metadata = {
  * 404.
  *
  * Phase one is a single route, so this is only reachable from a stale or
- * mistyped link — most likely a moved edition PDF. It stays on-brand and
+ * mistyped link — most likely a moved edition. It stays on-brand and
  * points at the two things a lost visitor actually wants: the latest edition
  * and the homepage (25-launch-checklist.md, "check 404s").
  */
@@ -43,12 +43,11 @@ export default function NotFound() {
           </Button>
 
           <Button
-            href={latest.pdf}
-            external
+            href={latest.reader}
             variant="secondary"
             event="issue_open"
             payload={{ issue_id: latest.id, kind: "view", location: "404" }}
-            ariaLabel={`Open ${latest.title} Edition (PDF)`}
+            ariaLabel={`Read ${latest.title} Edition online`}
           >
             Read Issue {latest.issueNumber}
           </Button>

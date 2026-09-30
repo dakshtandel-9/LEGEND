@@ -2,18 +2,16 @@
  * Generates the launch placeholders in /public.
  *
  * 15-asset-inventory.md lists every real asset as outstanding — logo,
- * portraits, covers and the two edition PDFs all require client sign-off and
+ * portraits and covers require client sign-off and
  * rights clearance (08-imagery-guidelines.md is emphatic: never use random
  * stock portraits of real people). Until those arrive the project still needs
  * files at the paths in src/data, or next/image 404s and the layout collapses.
  *
  * So this writes art-directed SVG placeholders in the brand palette, each
  * carrying a visible "PLACEHOLDER" caption so a stand-in can never be
- * mistaken for approved photography, plus one-page stub PDFs.
+ * mistaken for approved photography.
  *
- * Replacing them is a two-step job with no code change beyond the extension:
- *   1. drop the real .webp / .pdf at the same path;
- *   2. update the path in the matching file in src/data.
+ * Replace placeholders with approved imagery and update paths in src/data.
  *
  * Run with:  npm run assets:placeholders
  */
@@ -141,53 +139,6 @@ function editorialSvg(slug, width, height) {
 `;
 }
 
-/* --- Minimal one-page PDF ------------------------------------------------- */
-
-/**
- * Writes a valid single-page PDF with a correct cross-reference table.
- * Small enough to hand-assemble, and it means every "Open PDF" link on the
- * page resolves during QA instead of 404-ing (24-qa-checklist.md).
- */
-function stubPdf(title, subtitle) {
-  const esc = (s) => s.replace(/([()\\])/g, "\\$1");
-
-  const content =
-    `BT /F1 34 Tf 72 720 Td (${esc(title)}) Tj ET\n` +
-    `BT /F2 14 Tf 72 684 Td (${esc(subtitle)}) Tj ET\n` +
-    `BT /F2 12 Tf 72 640 Td (This is a placeholder file generated for development.) Tj ET\n` +
-    `BT /F2 12 Tf 72 620 Td (Replace it with the approved edition PDF before launch.) Tj ET\n` +
-    `0.72 0.62 0.45 rg 72 752 m 220 752 l 220 754 l 72 754 l f\n`;
-
-  const objects = [
-    "<< /Type /Catalog /Pages 2 0 R >>",
-    "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
-    "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] " +
-      "/Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>",
-    "<< /Type /Font /Subtype /Type1 /BaseFont /Times-Roman >>",
-    "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
-    `<< /Length ${Buffer.byteLength(content, "latin1")} >>\nstream\n${content}endstream`,
-  ];
-
-  let pdf = "%PDF-1.4\n";
-  const offsets = [];
-
-  objects.forEach((body, index) => {
-    offsets.push(Buffer.byteLength(pdf, "latin1"));
-    pdf += `${index + 1} 0 obj\n${body}\nendobj\n`;
-  });
-
-  const xrefStart = Buffer.byteLength(pdf, "latin1");
-  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
-  for (const offset of offsets) {
-    pdf += `${String(offset).padStart(10, "0")} 00000 n \n`;
-  }
-  pdf +=
-    `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\n` +
-    `startxref\n${xrefStart}\n%%EOF\n`;
-
-  return Buffer.from(pdf, "latin1");
-}
-
 /* --- Discovery ------------------------------------------------------------ */
 
 /** Pulls every local asset path referenced by the content files. */
@@ -198,7 +149,7 @@ async function collectAssetPaths() {
   for (const file of files) {
     if (!file.endsWith(".ts")) continue;
     const source = await readFile(join(DATA, file), "utf8");
-    for (const match of source.matchAll(/["'](\/(?:images|issues)\/[^"']+)["']/g)) {
+    for (const match of source.matchAll(/["'](\/images\/[^"']+)["']/g)) {
       paths.add(match[1]);
     }
   }
@@ -218,13 +169,6 @@ for (const assetPath of await collectAssetPaths()) {
   await mkdir(dirname(target), { recursive: true });
 
   const slug = assetPath.split("/").pop().replace(/\.[^.]+$/, "");
-
-  if (assetPath.startsWith("/issues/")) {
-    const label = titleFromSlug(slug.replace(/^legend-/, ""));
-    await writeFile(target, stubPdf("LEGEND", `${label} — placeholder edition`));
-    written.push(assetPath);
-    continue;
-  }
 
   // Only SVG placeholders are generated. If a path already points at real
   // artwork (.webp/.jpg), leave it well alone.

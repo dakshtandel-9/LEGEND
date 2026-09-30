@@ -88,13 +88,12 @@ export function DevelopersDiary() {
                     return (
                       <li key={person.id} className="border-b border-line">
                         <TrackedLink
-                          href={issue?.pdf ?? `#${ANCHORS.editions}`}
-                          external={Boolean(issue?.pdf)}
+                          href={issue?.reader ?? `#${ANCHORS.editions}`}
                           event="developers_diary_click"
                           payload={{ person_id: person.id }}
                           aria-label={`${person.name} — Developers' Diary, ${
                             issue ? issue.title : "LEGEND"
-                          }. Opens the edition PDF.`}
+                          }. Read the edition online.`}
                           className="group flex min-h-[4.5rem] items-center justify-between gap-6 py-5"
                         >
                           <span>
@@ -125,12 +124,11 @@ export function DevelopersDiary() {
             <Reveal delay={260}>
               <div className="mt-11 flex flex-wrap items-center gap-6">
                 <Button
-                  href={targetIssue.pdf}
-                  external
+                  href={targetIssue.reader}
                   variant="primary"
                   event="developers_diary_click"
                   payload={{ issue_id: targetIssue.id, location: "section_cta" }}
-                  ariaLabel={`${copy.cta} — open ${targetIssue.title} Edition (PDF)`}
+                  ariaLabel={`${copy.cta} — read ${targetIssue.title} Edition online`}
                 >
                   {copy.cta}
                 </Button>

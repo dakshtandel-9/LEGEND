@@ -53,7 +53,7 @@ export function track(event: AnalyticsEvent, payload: EventPayload = {}): void {
  * Per-issue open events. Unknown editions fall back to a generic `issue_open`
  * carrying the id.
  */
-export function trackIssueOpen(issueId: string, kind: "view" | "pdf"): void {
+export function trackIssueOpen(issueId: string, kind: "view"): void {
   const named: Record<string, AnalyticsEvent> = {
     "may-2026": "issue_may_open",
     "september-2026": "issue_september_open",

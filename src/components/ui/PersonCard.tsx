@@ -32,11 +32,10 @@ export function PersonCard({
   return (
     <article className="group h-full">
       <TrackedLink
-        href={issue?.pdf ?? "#editions"}
-        external={Boolean(issue?.pdf)}
+        href={issue?.reader ?? "#editions"}
         event="featured_person_click"
         payload={{ person_id: person.id, issue_id: person.issueId }}
-        aria-label={`${person.name} — featured in LEGEND ${issueRef}. Opens the edition PDF.`}
+        aria-label={`${person.name} — featured in LEGEND ${issueRef}. Read the edition online.`}
         className="block h-full focus-visible:outline-2 focus-visible:outline-offset-4"
       >
         <div className="frame frame-hover aspect-[4/5] w-full">

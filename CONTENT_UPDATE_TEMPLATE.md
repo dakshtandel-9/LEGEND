@@ -13,7 +13,7 @@ From [`19-content-maintenance.md`](legend-landing-page-planning/19-content-maint
 | Issue number | |
 | Month / year | |
 | Cover image attached | ☐ |
-| Edition PDF attached | ☐ |
+| Edition source PDF attached for page-image conversion | ☐ |
 | Accent colour (hex, or "use previous") | |
 | One-line description (about 20 words) | |
 
@@ -83,14 +83,14 @@ For each story, a two-sentence summary for the card:
 - [ ] Every photograph may be used online, and cropped
 - [ ] Photographer credits noted where required
 - [ ] Names, designations and organisations are spelled as they should appear
-- [ ] The edition PDF may be published publicly
+- [ ] The edition page images may be shown publicly
 - [ ] Headlines are final
 
 ---
 
 ### For the developer
 
-1. `public/images/issues/` ← cover · `public/issues/` ← PDF · `public/images/{people,stories}/` ← photography
+1. `public/images/issues/` ← cover · `public/reader/<issue-id>/` ← rendered page images · `public/images/{people,stories}/` ← photography
 2. Append to `src/data/issues.ts`; add people and stories; move the `featured` flags
 3. Set the status flags on each new item as the checklist above was answered
 4. `npm run verify` — resolve every blocking error, review the pending list

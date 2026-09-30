@@ -79,12 +79,11 @@ export function Hero() {
               style={{ "--line-delay": "540ms" } as React.CSSProperties}
             >
               <Button
-                href={latest.pdf}
-                external
+                href={latest.reader}
                 variant="primary"
                 event="hero_latest_issue_click"
                 payload={{ issue_id: latest.id }}
-                ariaLabel={`${hero.primaryCta} — open ${latest.title} Edition (PDF)`}
+                ariaLabel={`${hero.primaryCta} — read ${latest.title} Edition online`}
               >
                 {hero.primaryCta}
               </Button>

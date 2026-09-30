@@ -42,8 +42,11 @@ export type Issue = {
   title: string;
   description: string;
   cover: string;
-  /** Local file under /public/issues. Never preloaded (22-performance-budget.md). */
-  pdf: string;
+  /** Internal page with an image-based edition reader. */
+  reader: string;
+  pageCount: number;
+  pageWidth: number;
+  pageHeight: number;
   accent: IssueAccent;
   featuredNames: string[];
   /** Cover alt text — issues carry meaning, so this is never decorative. */
@@ -76,7 +79,7 @@ export type Story = {
   issueId: string;
   /** Lead story in the "Stories That Matter" grid. Exactly one should be true. */
   featured?: boolean;
-  /** Optional deep link — a page reference inside the edition PDF. */
+  /** Optional deep link — a page reference inside the edition reader. */
   pageLabel?: string;
   status: EditorialStatus;
 };

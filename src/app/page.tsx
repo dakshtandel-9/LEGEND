@@ -32,10 +32,10 @@ export default function HomePage() {
           <div className="panel-meta"><span>01 / The cover story</span><Star /></div>
           <h1 id="cover-heading" data-entrance="headline">Non-<br />negotiable.<br /><span>One standard.</span></h1>
           <p>A career shaped by public service, repeated transfers, and a standard that has never moved.</p>
-          <TrackedLink href={latest.pdf + "#page=3"} external event="story_card_click" payload={{ story_id: "tukaram-mundhe-cover-story", location: "hero" }} className="editorial-link">Read the cover story <Arrow /></TrackedLink>
+          <TrackedLink href={latest.reader + "#page-3"} event="story_card_click" payload={{ story_id: "tukaram-mundhe-cover-story", location: "hero" }} className="editorial-link">Read the cover story <Arrow /></TrackedLink>
           <div className="cover-note"><span>In this issue</span><strong>Tukaram Mundhe, IAS</strong><span>The officer who would not bend</span></div>
         </div>
-        <TrackedLink href={latest.pdf + "#page=3"} external event="issue_open" className="cover-photo" aria-label="Read Tukaram Mundhe’s cover story in the September 2026 edition">
+        <TrackedLink href={latest.reader + "#page-3"} event="issue_open" className="cover-photo" aria-label="Read Tukaram Mundhe’s cover story in the September 2026 edition">
           <EditorialImage src="/images/editorial/tukaram-munde.jpg" alt="Tukaram Mundhe seated for his LEGEND cover portrait" fill parallax priority sizes="(max-width: 700px) 100vw, 40vw" />
           <span className="photo-label">On the cover / September 2026</span>
           <span className="photo-caption">Moved twenty-five times.<br />Never moved his standard.</span>
@@ -58,12 +58,12 @@ export default function HomePage() {
         <div className="editorial-heading" data-motion="rise"><h2 id="editions-title">Good stories.<br /><span>Great editions.</span></h2><p>Fresh perspectives, cover to cover.<br />Explore the people and ideas<br />inside LEGEND.</p></div>
         <div className="edition-grid">{editions.map((issue, index) => <article key={issue.id} className={"edition-card edition-" + issue.accent} data-motion="rise" data-motion-delay={index}>
           <div className="edition-card-top"><span>{index === 0 ? "The latest issue" : "Where it began"}</span><span>Issue / {issue.issueNumber}</span></div>
-          <TrackedLink href={issue.pdf} external event="issue_open" payload={{ issue_id: issue.id, location: "archive" }} className="edition-art" aria-label={"Read LEGEND " + issue.title + " (PDF)"}>
+          <TrackedLink href={issue.reader} event="issue_open" payload={{ issue_id: issue.id, location: "archive" }} className="edition-art" aria-label={"Read LEGEND " + issue.title + " online"}>
             <span className="edition-backdrop" aria-hidden="true">{issue.month}</span>
             <EditorialImage src={issue.cover} alt={issue.coverAlt} width={597} height={842} sizes="(max-width: 700px) 65vw, 25vw" />
             <span className="edition-stamp">Print<br />meets<br />perspective <Arrow /></span>
           </TrackedLink>
-          <div className="edition-card-bottom"><div><span className="mini-label">Excellence / Culture / Vision</span><h3>{issue.title}</h3></div><TrackedLink href={issue.pdf} external event="issue_open" payload={{ issue_id: issue.id, location: "archive_cta" }} className="circle-link" aria-label={"Open " + issue.title + " PDF"}><Arrow /></TrackedLink></div>
+          <div className="edition-card-bottom"><div><span className="mini-label">Excellence / Culture / Vision</span><h3>{issue.title}</h3></div><TrackedLink href={issue.reader} event="issue_open" payload={{ issue_id: issue.id, location: "archive_cta" }} className="circle-link" aria-label={"Open " + issue.title + " reader"}><Arrow /></TrackedLink></div>
           <p className="edition-names">{issue.featuredNames.slice(0, 3).join(" / ")}</p>
         </article>)}</div>
       </section>
@@ -72,9 +72,9 @@ export default function HomePage() {
         <div className="section-kicker" data-motion="rule"><span>03 / From the pages of LEGEND</span><span>The editor’s selection</span></div>
         <div className="editorial-heading" data-motion="rise"><h2 id="stories-title">Behind the<br /><span>headline.</span></h2><a href="#editions" className="editorial-link">Explore the editions <Arrow /></a></div>
         <div className="selected-grid single-story">{selections.map((story, i) => <article className="selected-story" key={story.image} data-motion="rise" data-motion-delay={i}>
-          <TrackedLink href={latest.pdf + "#page=" + story.page} external event="story_card_click" payload={{ story_id: story.image }} className="selected-image" aria-label={"Read " + story.title + " in the September 2026 edition"}><EditorialImage src={"/images/editorial/" + story.image + ".jpg"} alt={story.name + ", featured on the September cover of LEGEND"} fill parallax sizes="(max-width: 700px) 90vw, 45vw" /><span className="story-number">0{i + 1}</span><span className="image-arrow" aria-hidden="true">↗</span></TrackedLink>
+          <TrackedLink href={latest.reader + "#page-" + story.page} event="story_card_click" payload={{ story_id: story.image }} className="selected-image" aria-label={"Read " + story.title + " in the September 2026 edition"}><EditorialImage src={"/images/editorial/" + story.image + ".jpg"} alt={story.name + ", featured on the September cover of LEGEND"} fill parallax sizes="(max-width: 700px) 90vw, 45vw" /><span className="story-number">0{i + 1}</span><span className="image-arrow" aria-hidden="true">↗</span></TrackedLink>
           <div className="story-meta"><span>{story.category}</span><span>September ’26</span></div>
-          <h3><TrackedLink href={latest.pdf + "#page=" + story.page} external event="story_card_click">{story.title}</TrackedLink></h3>
+          <h3><TrackedLink href={latest.reader + "#page-" + story.page} event="story_card_click">{story.title}</TrackedLink></h3>
           <p className="story-byline">{story.name}</p>
           <p className="story-dek">A reported profile on the career behind the headlines, from water management and civic administration to Maharashtra’s Food and Drug Administration.</p>
           <div className="story-stats" aria-label="Career highlights from the September cover story">
@@ -82,12 +82,12 @@ export default function HomePage() {
             <div><strong>25+</strong><span>Transfers</span></div>
             <div><strong>1</strong><span>Standard held</span></div>
           </div>
-          <TrackedLink href={latest.pdf + "#page=" + story.page} external event="story_card_click" className="story-read-link">Read the full feature <Arrow /></TrackedLink>
+          <TrackedLink href={latest.reader + "#page-" + story.page} event="story_card_click" className="story-read-link">Read the full feature <Arrow /></TrackedLink>
         </article>)}</div>
       </div></section>
 
       <section id="developers-diary" className="diary-section" aria-labelledby="diary-title">
-        <div className="diary-copy" data-motion="rise"><div className="panel-meta"><span>04 / The signature series</span><Star /></div><h2 id="diary-title">The record<br /><span>before headlines.</span></h2><p>Before the headlines, a career in water, civic administration, and the daily work of applying the rules.</p><TrackedLink href={latest.pdf + "#page=4"} external event="story_card_click" className="editorial-link">Read the full story <Arrow /></TrackedLink><span className="diary-footnote">Public service / Leadership / The long view</span></div>
+        <div className="diary-copy" data-motion="rise"><div className="panel-meta"><span>04 / The signature series</span><Star /></div><h2 id="diary-title">The record<br /><span>before headlines.</span></h2><p>Before the headlines, a career in water, civic administration, and the daily work of applying the rules.</p><TrackedLink href={latest.reader + "#page-4"} event="story_card_click" className="editorial-link">Read the full story <Arrow /></TrackedLink><span className="diary-footnote">Public service / Leadership / The long view</span></div>
         <div className="diary-image" data-motion="rise"><EditorialImage src="/images/editorial/tukaram-record.png" alt="Tukaram Mundhe, pictured in the September feature about his public service record" fill parallax sizes="(max-width: 700px) 100vw, 50vw" /><div><span>From the September edition</span><strong>Tukaram Mundhe</strong><span>The record before the headlines</span></div></div>
       </section>
 
@@ -109,4 +109,3 @@ export default function HomePage() {
     </div>
   );
 }
-

@@ -86,7 +86,6 @@ export const site = {
       intro:
         "Explore the stories, people and ideas featured across LEGEND's recent issues.",
       primaryCta: "View Edition",
-      secondaryCta: "Open PDF",
     },
 
     stories: {

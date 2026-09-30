@@ -26,7 +26,7 @@ const SIZES: Record<NonNullable<StoryCardProps["variant"]>, string> = {
  * A story in the "Stories That Matter" grid.
  *
  * Phase one has no /stories/[slug] route (13-information-architecture.md), so
- * the card links into the edition PDF and says so plainly — "View in Edition"
+ * the card links into the on-site edition reader — "View in Edition"
  * from the copy deck, rather than a "Read more" that leads nowhere.
  */
 export function StoryCard({ story, variant = "supporting" }: StoryCardProps) {
@@ -36,13 +36,12 @@ export function StoryCard({ story, variant = "supporting" }: StoryCardProps) {
   return (
     <article className="group flex h-full flex-col">
       <TrackedLink
-        href={issue?.pdf ?? "#editions"}
-        external={Boolean(issue?.pdf)}
+        href={issue?.reader ?? "#editions"}
         event="story_card_click"
         payload={{ story_id: story.id, issue_id: story.issueId }}
         aria-label={`${story.title} — ${site.copy.stories.cta}, ${
           issue ? issue.title : "LEGEND"
-        }. Opens the edition PDF.`}
+        }. Read the edition online.`}
         className="flex h-full flex-col focus-visible:outline-2 focus-visible:outline-offset-4"
       >
         <div className={`frame frame-hover w-full ${RATIO[variant]}`}>

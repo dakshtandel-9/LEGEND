@@ -8,9 +8,8 @@ import { ANCHORS } from "@/lib/constants";
 /**
  * "The Latest Editions" — 14-section-specification.md #04.
  *
- * Two large issue cards at launch, newest first. Nothing here loads a PDF:
- * the covers are optimised images and the files are only fetched when a
- * visitor clicks (22-performance-budget.md).
+ * Two large issue cards at launch, newest first. Covers link to the on-site
+ * edition readers.
  */
 export function Editions() {
   const editions = getIssuesNewestFirst();

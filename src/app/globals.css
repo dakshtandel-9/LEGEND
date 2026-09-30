@@ -635,3 +635,26 @@ header.editorial-header a.bg-ink { background:var(--color-may); color:var(--colo
   .footer-links nav { gap:16px; }
   .footer-bottom { display:grid; grid-template-columns:1fr; gap:15px; }
 }
+
+/* On-site edition reader. Magazine pages are images, with no PDF controls. */
+.reader-shell { background:#e9e5dc; color:var(--color-ink); min-height:100vh; }
+.reader-intro { display:grid; grid-template-columns:1fr auto; gap:8px 24px; padding:clamp(32px,5vw,70px) max(24px,calc((100vw - 1420px)/2)); background:var(--color-ink); color:var(--color-paper); }
+.reader-back { grid-column:1 / -1; justify-self:start; margin-bottom:25px; border-bottom:1px solid var(--color-may); padding-bottom:8px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+.reader-back:hover, .reader-end a:hover { color:var(--color-may); }
+.reader-kicker { grid-column:1 / -1; color:var(--color-may); font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.reader-intro h1 { grid-column:1; font-size:clamp(48px,8vw,110px); font-weight:850; line-height:.95; letter-spacing:-.06em; }
+.reader-intro > p:last-of-type { grid-column:1; margin-top:18px; font-size:17px; }
+.reader-intro > span { grid-column:2; grid-row:3 / 5; align-self:end; padding-bottom:5px; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+.reader-pages { padding:clamp(20px,5vw,75px) 20px 20px; }
+.reader-page { width:100%; max-width:960px; margin:0 auto clamp(28px,5vw,65px); scroll-margin-top:110px; }
+.reader-wide .reader-page { max-width:1300px; }
+.reader-page img { display:block; width:100%; height:auto; box-shadow:0 20px 45px #15151525; }
+.reader-page figcaption { margin-top:12px; color:#55524b; font-size:11px; font-weight:700; text-align:right; letter-spacing:.1em; }
+.reader-end { display:flex; justify-content:space-between; gap:20px; padding:25px max(24px,calc((100vw - 1420px)/2)) 50px; border-top:1px solid #15151540; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+.reader-end a { border-bottom:1px solid currentColor; }
+@media (max-width:700px) {
+  .reader-intro { grid-template-columns:1fr; }
+  .reader-intro > span { grid-column:1; grid-row:auto; margin-top:12px; }
+  .reader-end { flex-direction:column; }
+  .reader-end a { align-self:flex-start; }
+}

@@ -20,7 +20,7 @@ type IssueCardProps = {
  */
 export function IssueCard({ issue, isLatest = false }: IssueCardProps) {
   const accent = accentColor(issue.accent);
-  const pdfLabel = `Open ${issue.title} Edition (PDF)`;
+  const readerLabel = `Read ${issue.title} Edition online`;
 
   return (
     <article
@@ -47,11 +47,10 @@ export function IssueCard({ issue, isLatest = false }: IssueCardProps) {
       </div>
 
       <TrackedLink
-        href={issue.pdf}
-        external
+        href={issue.reader}
         event="issue_open"
         payload={{ issue_id: issue.id, kind: "view" }}
-        aria-label={pdfLabel}
+        aria-label={readerLabel}
         className="mt-8 block focus-visible:outline-2 focus-visible:outline-offset-4"
       >
         {/* Covers keep their printed proportion (08-imagery-guidelines.md). */}
@@ -94,11 +93,10 @@ export function IssueCard({ issue, isLatest = false }: IssueCardProps) {
 
       <div className="mt-auto flex flex-wrap items-center gap-x-8 gap-y-4 pt-9">
         <TrackedLink
-          href={issue.pdf}
-          external
+          href={issue.reader}
           event="issue_open"
           payload={{ issue_id: issue.id, kind: "view" }}
-          aria-label={pdfLabel}
+          aria-label={readerLabel}
           className="group/link inline-flex min-h-[2.75rem] items-center gap-2 label text-ink border-b border-ink/25 transition-colors duration-200 hover:border-gold hover:text-gold"
         >
           {site.copy.editions.primaryCta}
@@ -110,17 +108,6 @@ export function IssueCard({ issue, isLatest = false }: IssueCardProps) {
           </span>
         </TrackedLink>
 
-        {/* Same file, different intent: read in the browser vs. keep a copy. */}
-        <TrackedLink
-          href={issue.pdf}
-          download
-          event="issue_open"
-          payload={{ issue_id: issue.id, kind: "pdf" }}
-          aria-label={`Download ${issue.title} Edition (PDF)`}
-          className="inline-flex min-h-[2.75rem] items-center label text-muted transition-colors duration-200 hover:text-ink"
-        >
-          {site.copy.editions.secondaryCta}
-        </TrackedLink>
       </div>
     </article>
   );

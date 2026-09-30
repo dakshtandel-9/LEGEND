@@ -69,7 +69,10 @@ const issueIds = new Set(issues.map((issue) => issue.id));
 const assets = [
   ...issues.flatMap((i) => [
     { path: i.cover, owner: `issue "${i.id}" cover` },
-    { path: i.pdf, owner: `issue "${i.id}" PDF` },
+    ...Array.from({ length: i.pageCount }, (_, index) => ({
+      path: `/reader/${i.id}/page-${String(index + 1).padStart(2, "0")}.jpg`,
+      owner: `issue "${i.id}" page ${index + 1}`,
+    })),
   ]),
   ...people.map((p) => ({ path: p.image, owner: `person "${p.id}"` })),
   ...stories.map((s) => ({ path: s.image, owner: `story "${s.id}"` })),
@@ -87,12 +90,6 @@ for (const { path, owner } of assets) {
 
   if (path.endsWith(".svg")) {
     placeholderCount += 1;
-  } else if (path.endsWith(".pdf")) {
-    const head = await readFile(join(PUBLIC, path), "latin1");
-    if (head.includes("placeholder file generated for development")) {
-      placeholderCount += 1;
-      warn("assets", `${owner} is still the generated stub PDF (${path}).`);
-    }
   }
 }
 
@@ -100,7 +97,7 @@ if (placeholderCount > 0) {
   warn(
     "assets",
     `${placeholderCount} placeholder asset(s) still in use. Replace with ` +
-      `rights-cleared imagery and the real edition PDFs (15-asset-inventory.md).`,
+      `rights-cleared imagery (15-asset-inventory.md).`,
   );
 }
 

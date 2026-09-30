@@ -3,6 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
+  async redirects() {
+    return [
+      { source: "/issues/legend-may-2026.pdf", destination: "/read/may-2026", permanent: false },
+      { source: "/issues/legend-september-2026.pdf", destination: "/read/september-2026", permanent: false },
+    ];
+  },
+
   images: {
     // All imagery is first-party and served from /public. No remote patterns
     // are configured on purpose — the project has no external image sources.

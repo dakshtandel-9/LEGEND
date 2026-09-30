@@ -5,9 +5,7 @@ import { SITE_URL } from "@/lib/constants";
 /**
  * Sitemap — 20-seo-plan.md.
  *
- * Phase one is a single route (13-information-architecture.md), so the map is
- * the homepage plus the edition PDFs, which are public, cleanly named and
- * worth indexing in their own right.
+ * The homepage and on-site edition readers are all public pages.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -20,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     ...issues.map((issue) => ({
-      url: `${SITE_URL}${issue.pdf}`,
+      url: `${SITE_URL}${issue.reader}`,
       lastModified,
       changeFrequency: "yearly" as const,
       priority: 0.6,
