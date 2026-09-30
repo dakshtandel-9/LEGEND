@@ -31,7 +31,7 @@ export function getIssueById(id: string): Issue | undefined {
 }
 
 /**
- * Short issue reference for cards: "Issue 02 · July 2026".
+ * Short issue reference for cards: "Issue 03 · September 2026".
  * Falls back to an empty string rather than rendering "undefined".
  */
 export function issueLabel(issueId: string): string {

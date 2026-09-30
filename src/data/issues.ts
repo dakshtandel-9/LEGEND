@@ -2,7 +2,7 @@ import type { Issue } from "./types";
 
 /**
  * Editions, newest last. `getLatestIssue()` in src/lib/content.ts derives the
- * "latest" edition from this array, so adding Issue 03 is a one-object change
+ * "latest" edition from this array, so adding a new issue is a one-object change
  * (19-content-maintenance.md).
  */
 export const issues: Issue[] = [
@@ -26,20 +26,19 @@ export const issues: Issue[] = [
     ],
   },
   {
-    id: "july-2026",
-    issueNumber: "02",
-    month: "July",
+    id: "september-2026",
+    issueNumber: "03",
+    month: "September",
     year: 2026,
-    title: "July 2026",
+    title: "September 2026",
     description:
-      "Housing at scale, business legacy, banking and the culture of a changing Mumbai — reported across leadership, real estate and public life.",
-    cover: "/images/editorial/july-cover.jpg",
-    coverAlt: "Cover of LEGEND Issue 02, July 2026",
-    pdf: "/issues/legend-july-2026.pdf",
-    accent: "july",
+      "Issue 03 follows Tukaram Mundhe, IAS, and the standard behind a career shaped by public service and repeated transfers.",
+    cover: "/images/editorial/tukaram-cover.jpg",
+    coverAlt: "September 2026 cover of LEGEND featuring Tukaram Mundhe, IAS",
+    pdf: "/issues/legend-september-2026.pdf",
+    accent: "september",
     featuredNames: [
-      "Sanjeev Jaiswal",
-      "Gautam Singhania",
+      "Tukaram Mundhe",
       "Vikas Oberoi",
       "Jay Kotak",
     ],

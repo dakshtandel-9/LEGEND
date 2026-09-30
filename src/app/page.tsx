@@ -8,17 +8,15 @@ import { verticals } from "@/data/verticals";
 import { hasStoryForm, storyFormHref, hasPartnershipForm, partnershipFormHref } from "@/lib/constants";
 
 const selections = [
-  { name: "Vikas Oberoi", title: "Where luxury meets legacy", category: "Developers’ Diary", image: "oberoi", page: 22 },
-  { name: "Jay Kotak", title: "The next chapter of banking", category: "Business & Finance", image: "kotak", page: 25 },
-  { name: "Courtside", title: "Play. Stay. Repeat.", category: "Sport & Community", image: "courtside", page: 31 },
+  { name: "Tukaram Mundhe, IAS", title: "The officer who would not bend", category: "The cover story", image: "tukaram-munde", page: 3 },
 ];
 function Arrow() { return <span aria-hidden="true">↗</span>; }
 function Star() { return <span aria-hidden="true" className="editorial-star" data-parallax="rotate">✳</span>; }
 
 export default function HomePage() {
   const editions = [...issues].reverse();
-  const latest = issues.find((issue) => issue.id === "july-2026");
-  if (!latest) throw new Error("The July 2026 featured edition is missing.");
+  const latest = issues.at(-1);
+  if (!latest) throw new Error("The featured edition is missing.");
   return (
     <div className="editorial-home" id="top">
       <EditorialMotion />
@@ -32,15 +30,15 @@ export default function HomePage() {
       <section className="cover-grid editorial-shell" aria-labelledby="cover-heading">
         <div className="cover-copy">
           <div className="panel-meta"><span>01 / The cover story</span><Star /></div>
-          <h1 id="cover-heading" data-entrance="headline">The people.<br />The vision.<br /><span>The impact.</span></h1>
-          <p>Meet the minds moving Mumbai forward. Stories of ambition, conviction, and the people building what comes next.</p>
-          <TrackedLink href={latest.pdf + "#page=5"} external event="story_card_click" payload={{ story_id: "mhada-housing", location: "hero" }} className="editorial-link">Read the cover story <Arrow /></TrackedLink>
-          <div className="cover-note"><span>In this issue</span><strong>Sanjeev Jaiswal, IAS</strong><span>MHADA: The Housing Mission</span></div>
+          <h1 id="cover-heading" data-entrance="headline">Non-<br />negotiable.<br /><span>One standard.</span></h1>
+          <p>A career shaped by public service, repeated transfers, and a standard that has never moved.</p>
+          <TrackedLink href={latest.pdf + "#page=3"} external event="story_card_click" payload={{ story_id: "tukaram-mundhe-cover-story", location: "hero" }} className="editorial-link">Read the cover story <Arrow /></TrackedLink>
+          <div className="cover-note"><span>In this issue</span><strong>Tukaram Mundhe, IAS</strong><span>The officer who would not bend</span></div>
         </div>
-        <TrackedLink href={latest.pdf + "#page=5"} external event="issue_open" className="cover-photo" aria-label="Read Sanjeev Jaiswal’s cover story in the July edition">
-          <EditorialImage src="/images/editorial/sanjeev.jpg" alt="Sanjeev Jaiswal seated in his office, from the July LEGEND cover" fill parallax priority sizes="(max-width: 700px) 100vw, 40vw" />
-          <span className="photo-label">On the cover / July 2026</span>
-          <span className="photo-caption">A city’s future.<br />A human story.</span>
+        <TrackedLink href={latest.pdf + "#page=3"} external event="issue_open" className="cover-photo" aria-label="Read Tukaram Mundhe’s cover story in the September 2026 edition">
+          <EditorialImage src="/images/editorial/tukaram-munde.jpg" alt="Tukaram Mundhe seated for his LEGEND cover portrait" fill parallax priority sizes="(max-width: 700px) 100vw, 40vw" />
+          <span className="photo-label">On the cover / September 2026</span>
+          <span className="photo-caption">Moved twenty-five times.<br />Never moved his standard.</span>
           <span className="photo-corner" aria-hidden="true">↗</span>
         </TrackedLink>
         <aside className="contents-panel" aria-label="Explore this page">
@@ -73,16 +71,24 @@ export default function HomePage() {
       <section id="stories" className="stories-section editorial-section" aria-labelledby="stories-title"><div className="editorial-shell">
         <div className="section-kicker" data-motion="rule"><span>03 / From the pages of LEGEND</span><span>The editor’s selection</span></div>
         <div className="editorial-heading" data-motion="rise"><h2 id="stories-title">Behind the<br /><span>headline.</span></h2><a href="#editions" className="editorial-link">Explore the editions <Arrow /></a></div>
-        <div className="selected-grid">{selections.map((story, i) => <article className="selected-story" key={story.image} data-motion="rise" data-motion-delay={i}>
-          <TrackedLink href={latest.pdf + "#page=" + story.page} external event="story_card_click" payload={{ story_id: story.image }} className="selected-image" aria-label={"Read " + story.title + " in the July edition"}><EditorialImage src={"/images/editorial/" + story.image + ".jpg"} alt={story.name + ", featured in the July edition of LEGEND"} fill parallax sizes="(max-width: 700px) 90vw, 30vw" /><span className="story-number">0{i + 1}</span><span className="image-arrow" aria-hidden="true">↗</span></TrackedLink>
-          <div className="story-meta"><span>{story.category}</span><span>July ’26</span></div>
-          <h3><TrackedLink href={latest.pdf + "#page=" + story.page} external event="story_card_click">{story.title}</TrackedLink></h3><p>{story.name}</p>
+        <div className="selected-grid single-story">{selections.map((story, i) => <article className="selected-story" key={story.image} data-motion="rise" data-motion-delay={i}>
+          <TrackedLink href={latest.pdf + "#page=" + story.page} external event="story_card_click" payload={{ story_id: story.image }} className="selected-image" aria-label={"Read " + story.title + " in the September 2026 edition"}><EditorialImage src={"/images/editorial/" + story.image + ".jpg"} alt={story.name + ", featured on the September cover of LEGEND"} fill parallax sizes="(max-width: 700px) 90vw, 45vw" /><span className="story-number">0{i + 1}</span><span className="image-arrow" aria-hidden="true">↗</span></TrackedLink>
+          <div className="story-meta"><span>{story.category}</span><span>September ’26</span></div>
+          <h3><TrackedLink href={latest.pdf + "#page=" + story.page} external event="story_card_click">{story.title}</TrackedLink></h3>
+          <p className="story-byline">{story.name}</p>
+          <p className="story-dek">A reported profile on the career behind the headlines, from water management and civic administration to Maharashtra’s Food and Drug Administration.</p>
+          <div className="story-stats" aria-label="Career highlights from the September cover story">
+            <div><strong>21+</strong><span>Years of service</span></div>
+            <div><strong>25+</strong><span>Transfers</span></div>
+            <div><strong>1</strong><span>Standard held</span></div>
+          </div>
+          <TrackedLink href={latest.pdf + "#page=" + story.page} external event="story_card_click" className="story-read-link">Read the full feature <Arrow /></TrackedLink>
         </article>)}</div>
       </div></section>
 
       <section id="developers-diary" className="diary-section" aria-labelledby="diary-title">
-        <div className="diary-copy" data-motion="rise"><div className="panel-meta"><span>04 / The signature series</span><Star /></div><h2 id="diary-title">Developers’<br /><span>Diary.</span></h2><p>Beyond the skyline. Inside the vision, decisions, and philosophies of the people reshaping the places we call home.</p><TrackedLink href={latest.pdf + "#page=22"} external event="story_card_click" className="editorial-link">Meet the minds behind the city <Arrow /></TrackedLink><span className="diary-footnote">Real estate / Architecture / The long view</span></div>
-        <div className="diary-image" data-motion="rise"><EditorialImage src="/images/editorial/oberoi.jpg" alt="Vikas Oberoi, featured in LEGEND’s Developers’ Diary" fill parallax sizes="(max-width: 700px) 100vw, 50vw" /><div><span>From the July edition</span><strong>Vikas Oberoi</strong><span>Where luxury meets legacy</span></div></div>
+        <div className="diary-copy" data-motion="rise"><div className="panel-meta"><span>04 / The signature series</span><Star /></div><h2 id="diary-title">The record<br /><span>before headlines.</span></h2><p>Before the headlines, a career in water, civic administration, and the daily work of applying the rules.</p><TrackedLink href={latest.pdf + "#page=4"} external event="story_card_click" className="editorial-link">Read the full story <Arrow /></TrackedLink><span className="diary-footnote">Public service / Leadership / The long view</span></div>
+        <div className="diary-image" data-motion="rise"><EditorialImage src="/images/editorial/tukaram-record.png" alt="Tukaram Mundhe, pictured in the September feature about his public service record" fill parallax sizes="(max-width: 700px) 100vw, 50vw" /><div><span>From the September edition</span><strong>Tukaram Mundhe</strong><span>The record before the headlines</span></div></div>
       </section>
 
       <section id="about" className="editorial-section editorial-shell" aria-labelledby="about-title"><div className="about-grid">
@@ -103,6 +109,4 @@ export default function HomePage() {
     </div>
   );
 }
-
-
 

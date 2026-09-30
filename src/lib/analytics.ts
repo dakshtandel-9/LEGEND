@@ -18,7 +18,7 @@ export type AnalyticsEvent =
   | "hero_pitch_story_click"
   | "featured_person_click"
   | "issue_may_open"
-  | "issue_july_open"
+  | "issue_september_open"
   | "issue_open"
   | "story_card_click"
   | "developers_diary_click"
@@ -50,14 +50,13 @@ export function track(event: AnalyticsEvent, payload: EventPayload = {}): void {
 }
 
 /**
- * Per-issue open events, since 23-analytics-events.md names `issue_may_open`
- * and `issue_july_open` specifically. Unknown editions fall back to a generic
- * `issue_open` carrying the id, so Issue 03 needs no code change.
+ * Per-issue open events. Unknown editions fall back to a generic `issue_open`
+ * carrying the id.
  */
 export function trackIssueOpen(issueId: string, kind: "view" | "pdf"): void {
   const named: Record<string, AnalyticsEvent> = {
     "may-2026": "issue_may_open",
-    "july-2026": "issue_july_open",
+    "september-2026": "issue_september_open",
   };
 
   track(named[issueId] ?? "issue_open", { issue_id: issueId, kind });

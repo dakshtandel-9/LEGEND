@@ -12,7 +12,7 @@
  * launch, which is what a CMS approval workflow would otherwise give us.
  */
 
-export type IssueAccent = "may" | "july" | (string & {});
+export type IssueAccent = "may" | "september" | (string & {});
 
 /**
  * Rights and verification flags carried alongside every person and story.

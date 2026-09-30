@@ -13,9 +13,9 @@ type IssueCardProps = {
 /**
  * One edition.
  *
- * The issue accent (May lime, July cyan) lives *inside* this card and nowhere
+ * The issue accent (May lime, September cyan) lives *inside* this card and nowhere
  * else on the page — 03-design-principles.md #6 keeps the master brand stable
- * while letting each edition keep its own colour. Adding Issue 03 with a new
+ * while letting each edition keep its own colour. Adding a new issue with a new
  * accent needs no component change, only a token in constants.ts.
  */
 export function IssueCard({ issue, isLatest = false }: IssueCardProps) {

@@ -103,6 +103,7 @@ export const ANCHORS = {
 export const ACCENT_VAR: Record<string, string> = {
   may: "var(--color-may)",
   july: "var(--color-july)",
+  september: "var(--color-july)",
   blue: "var(--color-editorial-blue)",
   gold: "var(--color-gold)",
 };
