@@ -5,8 +5,9 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
-      { source: "/issues/legend-may-2026.pdf", destination: "/read/may-2026", permanent: false },
-      { source: "/issues/legend-september-2026.pdf", destination: "/read/september-2026", permanent: false },
+      // Editions are print-only: old PDF and reader links land on the covers.
+      { source: "/issues/:file*", destination: "/#editions", permanent: true },
+      { source: "/read/:issue*", destination: "/#editions", permanent: true },
     ];
   },
 

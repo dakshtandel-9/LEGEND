@@ -12,7 +12,7 @@
  * launch, which is what a CMS approval workflow would otherwise give us.
  */
 
-export type IssueAccent = "may" | "september" | (string & {});
+export type IssueAccent = "may" | "september" | "october" | (string & {});
 
 /**
  * Rights and verification flags carried alongside every person and story.
@@ -42,15 +42,17 @@ export type Issue = {
   title: string;
   description: string;
   cover: string;
-  /** Internal page with an image-based edition reader. */
-  reader: string;
-  pageCount: number;
-  pageWidth: number;
-  pageHeight: number;
+  /** Pixel size of the cover image. */
+  coverWidth: number;
+  coverHeight: number;
   accent: IssueAccent;
   featuredNames: string[];
   /** Cover alt text — issues carry meaning, so this is never decorative. */
   coverAlt: string;
+  /** Publication date as printed in the masthead. */
+  published: string;
+  /** The cover line as printed, and the page where the story opens. */
+  coverStory: { subject: string; headline: string; page: number };
 };
 
 export type Person = {
@@ -79,9 +81,33 @@ export type Story = {
   issueId: string;
   /** Lead story in the "Stories That Matter" grid. Exactly one should be true. */
   featured?: boolean;
-  /** Optional deep link — a page reference inside the edition reader. */
+  /** Optional print reference, e.g. "Issue 03 · October 2026". */
   pageLabel?: string;
+  /** Printed page where the story opens, as a print reference. */
+  page: number;
+  /** Where the homepage shows it: the cover panel, the feature grid or Developers' Diary. */
+  placement: "cover" | "feature" | "diary";
+  /**
+   * Shown under the photograph when its licence requires a visible credit —
+   * set for openly licensed images sourced outside the magazine.
+   */
+  photoCredit?: { author: string; source: string; sourceUrl: string; license: string; licenseUrl: string };
+  /** Optional line set over the cover photograph. */
+  caption?: string;
+  /** Optional figures from the story, shown with the cover panel. */
+  stats?: { value: string; label: string }[];
   status: EditorialStatus;
+};
+
+/**
+ * One line of an edition's contents, as printed — the "In these pages" index.
+ * Index lines carry no imagery, so they need no rights flags.
+ */
+export type ContentsEntry = {
+  issueId: string;
+  page: number;
+  subject: string;
+  headline: string;
 };
 
 export type Vertical = {

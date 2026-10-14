@@ -7,10 +7,11 @@
  * readable place.
  */
 
+import { contents } from "@/data/contents";
 import { issues } from "@/data/issues";
 import { people } from "@/data/people";
 import { stories } from "@/data/stories";
-import type { Issue, Person, Story } from "@/data/types";
+import type { ContentsEntry, Issue, Person, Story } from "@/data/types";
 
 /** Newest edition — the last entry in `issues`. */
 export function getLatestIssue(): Issue {
@@ -28,6 +29,37 @@ export function getIssuesNewestFirst(): Issue[] {
 
 export function getIssueById(id: string): Issue | undefined {
   return issues.find((issue) => issue.id === id);
+}
+
+/** The latest edition's cover story — the homepage's opening panel. */
+export function getCoverStory(): Story {
+  const story = stories.find((item) => item.placement === "cover");
+  if (!story) {
+    throw new Error("src/data/stories.ts needs one story with placement \"cover\".");
+  }
+  return story;
+}
+
+/** "Inside the issues" — illustrated features, in data order. */
+export function getFeatureStories(): Story[] {
+  return stories.filter((story) => story.placement === "feature");
+}
+
+/** Developers' Diary — one builder per edition, in data order. */
+export function getDiaryStories(): Story[] {
+  return stories.filter((story) => story.placement === "diary");
+}
+
+/** An edition's contents, in page order. */
+export function getContents(issueId: string): ContentsEntry[] {
+  return contents
+    .filter((entry) => entry.issueId === issueId)
+    .sort((a, b) => a.page - b.page);
+}
+
+/** Totals for the archive line under the founder's list. */
+export function getArchiveStats(): { editions: number; profiles: number } {
+  return { editions: issues.length, profiles: contents.length };
 }
 
 /**

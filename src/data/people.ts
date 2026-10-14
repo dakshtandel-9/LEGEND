@@ -1,126 +1,18 @@
+import { stories } from "./stories";
 import type { Person } from "./types";
 
-/** People featured in the current and archived LEGEND editions. */
-export const people: Person[] = [
-  {
-    id: "tukaram-mundhe",
-    name: "Tukaram Mundhe",
-    role: "IAS",
-    image: "/images/editorial/tukaram-munde.jpg",
-    imageAlt: "Tukaram Mundhe, featured on the September 2026 LEGEND cover",
-    category: "Leadership",
-    issueId: "september-2026",
-    featured: true,
-    status: {
-      approvedForWeb: true,
-      imageRightsConfirmed: false,
-      titleVerified: false,
-      roleVerified: false,
-      note: "Supplied September PDF is marked Draft; confirm editorial copy, designation and image rights before public launch.",
-    },
-  },
-  {
-    id: "vikas-oberoi",
-    name: "Vikas Oberoi",
-    image: "/images/people/vikas-oberoi.svg",
-    imageAlt: "Vikas Oberoi, featured on the September 2026 LEGEND cover",
-    category: "Developers' Diary",
-    issueId: "september-2026",
-    featured: true,
-    status: {
-      approvedForWeb: true,
-      imageRightsConfirmed: false,
-      titleVerified: true,
-      roleVerified: true,
-    },
-  },
-  {
-    id: "jay-kotak",
-    name: "Jay Kotak",
-    image: "/images/people/jay-kotak.svg",
-    imageAlt: "Jay Kotak, featured on the September 2026 LEGEND cover",
-    category: "Business & Finance",
-    issueId: "september-2026",
-    status: {
-      approvedForWeb: true,
-      imageRightsConfirmed: false,
-      titleVerified: true,
-      roleVerified: true,
-    },
-  },
-  {
-    id: "dr-sanjay-mukherjee",
-    name: "Dr. Sanjay Mukherjee",
-    organisation: "MMRDA",
-    image: "/images/people/dr-sanjay-mukherjee.svg",
-    imageAlt: "Portrait of Dr. Sanjay Mukherjee, featured in LEGEND",
-    category: "Mumbai & Infrastructure",
-    issueId: "may-2026",
-    featured: true,
-    status: {
-      approvedForWeb: true,
-      imageRightsConfirmed: false,
-      titleVerified: true,
-      roleVerified: false,
-      note: "Confirm the exact designation at MMRDA against the printed edition before launch.",
-    },
-  },
-  {
-    id: "nikhil-kamath",
-    name: "Nikhil Kamath",
-    image: "/images/people/nikhil-kamath.svg",
-    imageAlt: "Portrait of Nikhil Kamath, featured in LEGEND",
-    category: "Business & Finance",
-    issueId: "may-2026",
-    featured: true,
-    status: {
-      approvedForWeb: true,
-      imageRightsConfirmed: false,
-      titleVerified: true,
-      roleVerified: true,
-    },
-  },
-  {
-    id: "kangana-ranaut",
-    name: "Kangana Ranaut",
-    image: "/images/people/kangana-ranaut.svg",
-    imageAlt: "Portrait of Kangana Ranaut, featured in LEGEND",
-    category: "Culture & Public Life",
-    issueId: "may-2026",
-    featured: true,
-    status: {
-      approvedForWeb: true,
-      imageRightsConfirmed: false,
-      titleVerified: true,
-      roleVerified: true,
-    },
-  },
-  {
-    id: "jeet-adani",
-    name: "Jeet Adani",
-    image: "/images/people/jeet-adani.svg",
-    imageAlt: "Portrait of Jeet Adani, featured in LEGEND",
-    category: "Enterprise & Legacy",
-    issueId: "may-2026",
-    status: {
-      approvedForWeb: true,
-      imageRightsConfirmed: false,
-      titleVerified: true,
-      roleVerified: true,
-    },
-  },
-  {
-    id: "dr-niranjan-hiranandani",
-    name: "Dr. Niranjan Hiranandani",
-    image: "/images/people/dr-niranjan-hiranandani.svg",
-    imageAlt: "Portrait of Dr. Niranjan Hiranandani, featured in LEGEND",
-    category: "Developers' Diary",
-    issueId: "may-2026",
-    status: {
-      approvedForWeb: true,
-      imageRightsConfirmed: false,
-      titleVerified: true,
-      roleVerified: true,
-    },
-  },
-];
+/**
+ * People pictured on the homepage, derived from `stories` so names, images
+ * and rights flags have one source. Read by the Person selectors in
+ * src/lib/content.ts.
+ */
+export const people: Person[] = stories.map((story) => ({
+  id: story.id,
+  name: story.subject ?? story.title,
+  image: story.image,
+  imageAlt: story.imageAlt,
+  category: story.category,
+  issueId: story.issueId,
+  featured: story.placement !== "diary",
+  status: story.status,
+}));

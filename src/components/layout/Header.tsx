@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { TrackedLink } from "@/components/ui/TrackedLink";
@@ -101,13 +102,13 @@ export function Header() {
           }`}
         >
           {/* Masthead */}
-          <a
-            href="#top"
+          <Link
+            href="/#top"
             aria-label={`${site.brand.name} — back to top`}
             className="flex shrink-0 items-center"
           >
             <Wordmark size={scrolled ? "sm" : "md"} />
-          </a>
+          </Link>
 
           {/* Desktop navigation */}
           <nav aria-label="Primary" className="hidden lg:block">

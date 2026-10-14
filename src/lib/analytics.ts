@@ -19,6 +19,9 @@ export type AnalyticsEvent =
   | "featured_person_click"
   | "issue_may_open"
   | "issue_september_open"
+  | "issue_october_open"
+  | "founder_edition_click"
+  | "contents_entry_click"
   | "issue_open"
   | "story_card_click"
   | "developers_diary_click"
@@ -57,6 +60,7 @@ export function trackIssueOpen(issueId: string, kind: "view"): void {
   const named: Record<string, AnalyticsEvent> = {
     "may-2026": "issue_may_open",
     "september-2026": "issue_september_open",
+    "october-2026": "issue_october_open",
   };
 
   track(named[issueId] ?? "issue_open", { issue_id: issueId, kind });

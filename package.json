@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "assets:placeholders": "node scripts/generate-placeholders.mjs",
-    "content:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-content.mjs",
+    "content:check": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-content.mjs",
     "verify": "npm run typecheck && npm run lint && npm run content:check"
   },
   "dependencies": {

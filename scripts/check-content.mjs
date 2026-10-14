@@ -43,13 +43,15 @@ const exists = async (publicPath) => {
 
 /* --- Load the content ----------------------------------------------------- */
 
-let issues, people, stories, verticals, site;
+let issues, contents, stories, verticals, site;
 
 try {
   // Node strips the type annotations; the data files import only types from
-  // ./types, and those statements are erased before resolution.
+  // ./types, and those statements are erased before resolution. people.ts is
+  // derived from stories.ts with a value import Node cannot resolve, and adds
+  // nothing to audit, so it is not loaded.
   ({ issues } = await import("../src/data/issues.ts"));
-  ({ people } = await import("../src/data/people.ts"));
+  ({ contents } = await import("../src/data/contents.ts"));
   ({ stories } = await import("../src/data/stories.ts"));
   ({ verticals } = await import("../src/data/verticals.ts"));
   ({ site } = await import("../src/data/site.ts"));
@@ -69,15 +71,12 @@ const issueIds = new Set(issues.map((issue) => issue.id));
 const assets = [
   ...issues.flatMap((i) => [
     { path: i.cover, owner: `issue "${i.id}" cover` },
-    ...Array.from({ length: i.pageCount }, (_, index) => ({
-      path: `/reader/${i.id}/page-${String(index + 1).padStart(2, "0")}.jpg`,
-      owner: `issue "${i.id}" page ${index + 1}`,
-    })),
   ]),
-  ...people.map((p) => ({ path: p.image, owner: `person "${p.id}"` })),
   ...stories.map((s) => ({ path: s.image, owner: `story "${s.id}"` })),
   ...verticals.map((v) => ({ path: v.image, owner: `vertical "${v.id}"` })),
-  { path: "/images/stories/hero-editorial.svg", owner: "hero composition" },
+  ...(site.founder.portrait
+    ? [{ path: site.founder.portrait, owner: "founder portrait" }]
+    : []),
 ];
 
 let placeholderCount = 0;
@@ -103,13 +102,15 @@ if (placeholderCount > 0) {
 
 /* --- Referential integrity ------------------------------------------------ */
 
-for (const person of people) {
-  if (!issueIds.has(person.issueId)) {
-    error("data", `person "${person.id}" references unknown issue "${person.issueId}".`);
+// Print folios: each edition runs to 100 pages.
+const checkPage = (owner, issueId, page) => {
+  if (!(Number.isInteger(page) && page >= 1 && page <= 100)) {
+    error("data", `${owner} points at page ${page}, outside ${issueId} (1–100).`);
   }
-  if (!person.imageAlt?.trim()) {
-    error("a11y", `person "${person.id}" has no alt text.`);
-  }
+};
+
+for (const issue of issues) {
+  checkPage(`issue "${issue.id}" cover story`, issue.id, issue.coverStory.page);
 }
 
 for (const story of stories) {
@@ -119,6 +120,22 @@ for (const story of stories) {
   if (!story.imageAlt?.trim()) {
     error("a11y", `story "${story.id}" has no alt text.`);
   }
+  checkPage(`story "${story.id}"`, story.issueId, story.page);
+}
+
+for (const entry of contents) {
+  if (!issueIds.has(entry.issueId)) {
+    error("data", `contents entry "${entry.subject}" references unknown issue "${entry.issueId}".`);
+  }
+  checkPage(`contents entry "${entry.subject}"`, entry.issueId, entry.page);
+}
+
+const coverStories = stories.filter((s) => s.placement === "cover");
+if (coverStories.length !== 1) {
+  error(
+    "data",
+    `exactly one story must have placement "cover"; found ${coverStories.length}.`,
+  );
 }
 
 const leadStories = stories.filter((s) => s.featured);
@@ -129,18 +146,18 @@ if (leadStories.length !== 1) {
   );
 }
 
-const featuredPeople = people.filter((p) => p.featured);
-if (featuredPeople.length !== 5) {
+const features = stories.filter((s) => s.placement === "feature");
+if (features.length % 3 !== 0) {
   warn(
     "layout",
-    `the "Featured in LEGEND" grid is designed for 5 portraits (1 lead + 4); found ${featuredPeople.length}.`,
+    `the "Inside the issues" grid is designed in rows of 3; found ${features.length} features.`,
   );
 }
 
 // Categories on content should exist as editorial verticals, so the
 // "What We Cover" list stays a true index of the publication.
 const verticalLabels = new Set(verticals.map((v) => v.label));
-for (const item of [...people, ...stories]) {
+for (const item of stories) {
   if (!verticalLabels.has(item.category)) {
     warn(
       "data",
@@ -151,9 +168,9 @@ for (const item of [...people, ...stories]) {
 
 /* --- Editorial sign-off (11-content-inventory.md) ------------------------- */
 
-for (const item of [...people, ...stories]) {
+for (const item of stories) {
   const s = item.status;
-  const label = item.name ?? item.title;
+  const label = item.subject ?? item.title;
 
   if (!s.approvedForWeb) {
     warn("approval", `"${label}" is not marked approvedForWeb.`);
@@ -196,6 +213,14 @@ if (!site.contact.confirmed) {
     "config",
     "site.contact.confirmed is false — email addresses, Instagram handle and " +
       "location are placeholders pending client sign-off.",
+  );
+}
+
+if (!site.founder.portrait) {
+  warn(
+    "assets",
+    "no approved founder portrait yet; the founder section sets his initials. " +
+      "Add the photograph and set site.founder.portrait.",
   );
 }
 

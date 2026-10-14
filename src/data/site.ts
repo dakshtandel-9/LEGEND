@@ -27,6 +27,23 @@ export const site = {
   },
 
   /**
+   * The founder, as credited in every edition's masthead. The quotes are
+   * from the editor's letter in Issue 01 (page 5). `portrait` stays null until
+   * an approved photograph is supplied — the section sets his initials instead.
+   */
+  founder: {
+    name: "Yogesh Jagdish Asopa",
+    role: "Founder & Editor-in-Chief",
+    initials: "YJA",
+    portrait: null as string | null,
+    publisher: "Yash Prakashan",
+    quote:
+      "We will not chase the loudest voices in the room. We will seek out the quiet architects whose work shapes the economy the next generation inhabits.",
+    quoteSource: "Editor's letter, Issue 01 · May 2026",
+    signOff: "India is not waiting. Neither are we.",
+  },
+
+  /**
    * Contact and social details.
    *
    * PENDING CLIENT CONFIRMATION — 25-launch-checklist.md lists "final contact
@@ -36,7 +53,8 @@ export const site = {
    */
   contact: {
     confirmed: false,
-    editorialEmail: "editorial@legendmagazine.in",
+    /** Printed in the September and October mastheads. */
+    editorialEmail: "hello@legendmagazine.in",
     partnershipsEmail: "partnerships@legendmagazine.in",
     instagramHandle: "@legendmagazine",
     instagramUrl: "https://www.instagram.com/legendmagazine",
@@ -45,19 +63,21 @@ export const site = {
 
   /** Header navigation — 12-copy-deck.md, anchors from 13-information-architecture.md. */
   nav: [
-    { label: "Stories", href: "#stories" },
-    { label: "Editions", href: "#editions" },
-    { label: "Developers' Diary", href: "#developers-diary" },
-    { label: "About", href: "#about" },
-    { label: "Partner With Us", href: "#partnerships" },
+    { label: "Editions", href: "/#editions" },
+    { label: "Stories", href: "/#stories" },
+    { label: "Developers' Diary", href: "/#developers-diary" },
+    { label: "Founder", href: "/#founder" },
+    { label: "Partner With Us", href: "/#partnerships" },
   ],
 
   /** Footer navigation — 12-copy-deck.md. */
   footerNav: [
-    { label: "Editions", href: "#editions" },
-    { label: "Developers' Diary", href: "#developers-diary" },
-    { label: "Editorial Submissions", href: "#pitch" },
-    { label: "Advertising & Partnerships", href: "#partnerships" },
+    { label: "Editions", href: "/#editions" },
+    { label: "In These Pages", href: "/#index" },
+    { label: "The Founder", href: "/#founder" },
+    { label: "Developers' Diary", href: "/#developers-diary" },
+    { label: "Editorial Submissions", href: "/#pitch" },
+    { label: "Advertising & Partnerships", href: "/#partnerships" },
   ],
 
   copy: {

@@ -43,13 +43,11 @@ export default function NotFound() {
           </Button>
 
           <Button
-            href={latest.reader}
+            href={`/#${ANCHORS.editions}`}
             variant="secondary"
-            event="issue_open"
-            payload={{ issue_id: latest.id, kind: "view", location: "404" }}
-            ariaLabel={`Read ${latest.title} Edition online`}
+            ariaLabel={`See Issue ${latest.issueNumber}, ${latest.title}, and every edition`}
           >
-            Read Issue {latest.issueNumber}
+            See Issue {latest.issueNumber}
           </Button>
         </div>
 
